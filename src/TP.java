@@ -1,16 +1,9 @@
 import java.io.File;
 
 public class TP {
-	private ImageParser image;
 	
-	
-	
-	public TP(ImageParser image) {
-		this.image = image;
-	}
-	
-	public float[] getProbabiliades() {
-		float[] probabilidades = new float[256];
+	public double[] getProbabiliades(ImageParser image) {
+		double[] probabilidades = new double[256];
 		int[] veces = new int[256];
 		
 		for(int i = 0; i < 256; i++) {
@@ -24,22 +17,55 @@ public class TP {
 			}
 		}
 		for(int i = 0; i < 256; i++) {
-			probabilidades[i] = ((float) veces[i]) / (float) (500*500);
+			probabilidades[i] = ((double) veces[i]) / (double) (500*500);
 			System.out.println(Integer.toString(i) + " = " + probabilidades[i]);
 		}
 		
 		return probabilidades;
 	}
 	
-	public float getEntropia() {
-		float[] p = getProbabiliades();
-		float suma = 0;
+	public double getEntropia(ImageParser image) {
+		double[] p = getProbabiliades(image);
+		double suma = 0;
 		for(int i = 0; i < 256; i++) {
 			if(p[i] != 0) {
-				suma += p[i] *  ((float)Math.log((double) p[i]) / (float)Math.log((double) 2));
+				suma += p[i] *  ((double)Math.log((double) p[i]) / (double)Math.log((double) 2));
 			}
 		}
 		
 		return -suma;
+	}
+	
+	public double[][] getMatrizCondicional(ImageParser image){
+		double[][] matrizcond = new double[256][256];
+		double[] tiradas = new double[256];
+		for(int i=0;i<256;i++) {
+			for(int j=0;j<256;j++) {
+				matrizcond[i][j]=0;
+			}
+			tiradas[i]=0;
+		}
+		int coloranterior= image.getRGB(0, 0).getRed();
+		for(int i =0;i<256;i++) {
+			for(int j=0; j<256; j++) {
+				int coloractual=image.getRGB(i, j).getRed();;
+				if(j==0 && i==0) 
+					coloractual= image.getRGB(0, 1).getRed();
+				matrizcond[coloractual][coloranterior]++;
+				tiradas[coloranterior]++;
+				coloranterior=coloractual;
+			}
+		}
+		for(int i=0;i<256;i++) {
+			for(int j=0; j<256; j++) {
+				if(tiradas[j]==0) {
+					matrizcond[i][j]=0.0f;
+				}else {
+					matrizcond[i][j]=matrizcond[i][j]/tiradas[j];
+				}
+			}
+		}
+		
+		return matrizcond;
 	}
 }
