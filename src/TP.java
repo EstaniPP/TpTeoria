@@ -18,7 +18,6 @@ public class TP {
 		}
 		for(int i = 0; i < 256; i++) {
 			probabilidades[i] = ((double) veces[i]) / (double) (500*500);
-			System.out.println(Integer.toString(i) + " = " + probabilidades[i]);
 		}
 		
 		return probabilidades;
