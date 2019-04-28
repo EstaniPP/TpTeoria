@@ -9,9 +9,10 @@ import org.jfree.chart.plot.PlotOrientation;
        public static void main(String[] args) {
        double[] value = new double[100];
        Random generator = new Random();
-       for (int i=1; i < 100; i++) {
+       for (int i=0; i < 100; i++) {
        value[i] = generator.nextDouble();
-           int number = 10;
+       }
+       int number = 10;
        HistogramDataset dataset = new HistogramDataset();
        dataset.setType(HistogramType.RELATIVE_FREQUENCY);
        dataset.addSeries("Histogram",value,number);
@@ -29,6 +30,5 @@ import org.jfree.chart.plot.PlotOrientation;
         try {
         ChartUtilities.saveChartAsPNG(new File("histogram.PNG"), chart, width, height);
         } catch (IOException e) {}
-         }
    }
  }
