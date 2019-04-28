@@ -20,7 +20,7 @@ import org.jfree.chart.plot.PlotOrientation;
        String xaxis = "number";
        String yaxis = "value"; 
        PlotOrientation orientation = PlotOrientation.VERTICAL; 
-       boolean show = false; 
+       boolean show = false;  
        boolean toolTips = false;
        boolean urls = false; 
        JFreeChart chart = ChartFactory.createHistogram( plotTitle, xaxis, yaxis, 
