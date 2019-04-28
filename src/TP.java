@@ -13,7 +13,7 @@ public class TP {
 		
 		for(int i = 0; i < 500; i++) {
 			for(int j = 0; j < 500; j++) {
-				veces[image.getRGB(i, j).getRed()]++;
+				veces[image.getRGB(j, i).getRed()]++;
 			}
 		}
 		for(int i = 0; i < 256; i++) {
@@ -48,9 +48,9 @@ public class TP {
 		int coloranterior= image.getRGB(0, 0).getRed();
 		for(int i =0;i<256;i++) {
 			for(int j=0; j<256; j++) {
-				int coloractual=image.getRGB(i, j).getRed();;
+				int coloractual=image.getRGB(j, i).getRed();;
 				if(j==0 && i==0) 
-					coloractual= image.getRGB(0, 1).getRed();
+					coloractual= image.getRGB(1, 0).getRed();
 				matrizcond[coloractual][coloranterior]++;
 				tiradas[coloranterior]++;
 				coloranterior=coloractual;
