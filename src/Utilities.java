@@ -1,8 +1,8 @@
 import java.io.File;
 
-public class TP {
+public class Utilities {
 	
-	public double[] getProbabiliades(ImageParser image) {
+	public static double[] getProbabiliades(ImageParser image) {
 		double[] probabilidades = new double[256];
 		int[] veces = new int[256];
 		
@@ -23,7 +23,7 @@ public class TP {
 		return probabilidades;
 	}
 	
-	public double getEntropia(ImageParser image) {
+	public static double getEntropia(ImageParser image) {
 		double[] p = getProbabiliades(image);
 		double suma = 0;
 		for(int i = 0; i < 256; i++) {
@@ -35,7 +35,7 @@ public class TP {
 		return -suma;
 	}
 	
-	public double[][] getMatrizCondicional(ImageParser image){
+	public static double[][] getMatrizCondicional(ImageParser image){
 		double[][] matrizcond = new double[256][256];
 		double[] tiradas = new double[256];
 		for(int i=0;i<256;i++) {

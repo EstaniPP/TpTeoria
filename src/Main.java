@@ -14,7 +14,6 @@ public class Main {
 	
 	public static void main(String[] args) {
 		ImageParser p = new ImageParser(new File("src/marsSurface.bmp"));
-		TP tp = new TP();
 		
 		double[] bufferImagen = new double[250000];
 		ImageParser bloque = p.getBlock(0, 0);
@@ -25,7 +24,7 @@ public class Main {
 		}
 	    HistogramDataset dataset = new HistogramDataset();
 	    dataset.setType(HistogramType.FREQUENCY);
-	    dataset.addSeries("Histograma",bufferImagen,256);
+	    dataset.addSeries("Histograma", bufferImagen, 256);
 	    String plotTitle = "Histograma de entropias"; 
 	    String xaxis = "Entropias";
 	    String yaxis = "Valor"; 
