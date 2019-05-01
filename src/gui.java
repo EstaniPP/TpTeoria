@@ -133,12 +133,11 @@ public class gui extends JPanel{
 		double[][] entropiaSMemoria = new double[4][5];
 		double[][] entropiaCMemoria = new double[4][5];
 	    
-		/*for(int j=0; j<5; j++) {
+		for(int j=0; j<5; j++) {
 			for(int i =0; i<4; i++) {
 				entropiaCMemoria[i][j] = Utilities.getEntropiaCMemoria(p.getBlock(i, j));
 	   		  	System.out.println(entropiaCMemoria[i][j]);
 	   	  	}
-	    }*/
-		System.out.println(Utilities.getEntropiaCMemoria(p.getBlock(0, 0)));
+	    }
 	}
 }

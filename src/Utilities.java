@@ -48,22 +48,16 @@ public class Utilities {
 		double hCond = 0;
 		double[] p = getProbabiliades(image);
 		double[][] matCond = Utilities.getMatrizCondicional(image);
-		double suma =0;
 		for(int i = 0; i < 256; i++) {
-			if(p[i] != 0) {
 				double hi = 0;
 				for(int j = 0; j<256; j++) {
 					if(matCond[j][i] != 0) {
-						hi = -matCond[j][i] *  ((double)Math.log((double) matCond[j][i]) / (double)Math.log((double) 2));
+						hi += (-1 * matCond[j][i] * ((double)Math.log((double) matCond[j][i]) / (double)Math.log((double) 2)));
 					}
 				}
 				hCond  += (p[i] *  hi);
-				System.out.println("a " + p[i]);
-				suma += p[i];
-			}
 		}
-		System.out.println("b" + suma);
-		return entropiaestacionaria + hCond;
+		return (entropiaestacionaria + hCond)/2;
 	}
 	
 	public static double[][] getMatrizCondicional(ImageParser image){
@@ -83,9 +77,9 @@ public class Utilities {
 				int coloractual=image.getRGB(j, i).getRed();;
 				if(j!=0 || i!=0) {
 					matrizcond[coloractual][coloranterior]++;
-					tiradas[coloranterior]++;
 					coloranterior=coloractual;
-				}				
+				}
+				tiradas[coloranterior]++;
 			}
 		}
 		
