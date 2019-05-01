@@ -44,7 +44,6 @@ public class Utilities {
 	}
 	
 	public static double getEntropiaCMemoria(ImageParser image) {
-		double entropiaestacionaria = Utilities.getEntropiaSMemoria(image);
 		double hCond = 0;
 		double[] p = getProbabiliades(image);
 		double[][] matCond = Utilities.getMatrizCondicional(image);
@@ -57,7 +56,7 @@ public class Utilities {
 				}
 				hCond  += (p[i] *  hi);
 		}
-		return (entropiaestacionaria + hCond)/2;
+		return hCond;
 	}
 	
 	public static double[][] getMatrizCondicional(ImageParser image){
