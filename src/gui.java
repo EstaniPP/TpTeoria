@@ -19,11 +19,14 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class gui {
+public class gui extends JPanel{
 
 	private JFrame frame;
 	private JTextField textField;
 	private JLabel lblNewLabel;
+	private static String destination = "";
+	private JFileChooser chooser;
+	private File image;
 
 	/**
 	 * Launch the application.
@@ -44,7 +47,7 @@ public class gui {
 	/**
 	 * Create the application.
 	 */
-	public gui() {
+	public gui(){
 		initialize();
 	}
 
@@ -65,16 +68,16 @@ public class gui {
 		lblNewLabel = new JLabel("");
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 415, 501);
+		frame.setBounds(100, 100, 458, 574);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
 		JLabel lblSeleccioneImagen = new JLabel("Seleccione imagen");
-		lblSeleccioneImagen.setBounds(6, 6, 137, 16);
+		lblSeleccioneImagen.setBounds(16, 0, 137, 16);
 		frame.getContentPane().add(lblSeleccioneImagen);
 		
 		textField = new JTextField();
-		textField.setBounds(3, 26, 295, 26);
+		textField.setBounds(6, 26, 296, 26);
 		frame.getContentPane().add(textField);
 		textField.setColumns(10);
 		
@@ -85,20 +88,57 @@ public class gui {
 				fileChooser.setCurrentDirectory(new File(System.getProperty("user.dir")));
 				int seleccion = fileChooser.showOpenDialog(gui.this.lblNewLabel);
 				if(seleccion == JFileChooser.APPROVE_OPTION) {
-					File image = fileChooser.getSelectedFile();
+					image = fileChooser.getSelectedFile();
 					ImageParser p = new ImageParser(image);
 					gui.this.textField.setText(image.getPath());
 					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.this.resize(p.getBI(), 403, 383)));
 				}
 			}
 		});
-		btnSeleccionar.setBounds(299, 26, 117, 29);
+		btnSeleccionar.setBounds(314, 24, 128, 29);
 		frame.getContentPane().add(btnSeleccionar);
 		
 		
-		lblNewLabel.setBounds(6, 59, 403, 383);
+		lblNewLabel.setBounds(6, 59, 436, 436);
 		frame.getContentPane().add(lblNewLabel);
 		
+		JButton btnCrearArchivos = new JButton("Crear archivos");
+		btnCrearArchivos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent arg0) {                                       
+
+			    chooser = new JFileChooser(); 
+			    chooser.setCurrentDirectory(new java.io.File("."));
+			    chooser.setDialogTitle(destination);
+			    chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+			    chooser.setAcceptAllFileFilterUsed(false);    
+			    if (chooser.showOpenDialog(gui.this) == JFileChooser.APPROVE_OPTION) { 
+			      destination = chooser.getSelectedFile().toString();
+			      ImageParser p = new ImageParser(image);
+			      crearArchivos(p);
+			    }
+				
+			}
+		});
+		btnCrearArchivos.setBounds(305, 504, 137, 25);
+		frame.getContentPane().add(btnCrearArchivos);
 		
+	}
+	
+	public void crearArchivos(ImageParser p) {
+		ImageParser bloqueMayorE = p.getBlock(0, 0);
+		ImageParser bloqueMenorE = p.getBlock(0, 0);
+		ImageParser bloquePromedioE = p.getBlock(0, 0);
+		
+		double promedio=0;
+		double[][] entropiaSMemoria = new double[4][5];
+		double[][] entropiaCMemoria = new double[4][5];
+	    
+		/*for(int j=0; j<5; j++) {
+			for(int i =0; i<4; i++) {
+				entropiaCMemoria[i][j] = Utilities.getEntropiaCMemoria(p.getBlock(i, j));
+	   		  	System.out.println(entropiaCMemoria[i][j]);
+	   	  	}
+	    }*/
+		System.out.println(Utilities.getEntropiaCMemoria(p.getBlock(0, 0)));
 	}
 }

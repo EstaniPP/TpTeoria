@@ -31,7 +31,7 @@ public class Utilities {
 		return probabilidades;
 	}
 	
-	public static double getEntropia(ImageParser image) {
+	public static double getEntropiaSMemoria(ImageParser image) {
 		double[] p = getProbabiliades(image);
 		double suma = 0;
 		for(int i = 0; i < 256; i++) {
@@ -41,6 +41,29 @@ public class Utilities {
 		}
 		
 		return -suma;
+	}
+	
+	public static double getEntropiaCMemoria(ImageParser image) {
+		double entropiaestacionaria = Utilities.getEntropiaSMemoria(image);
+		double hCond = 0;
+		double[] p = getProbabiliades(image);
+		double[][] matCond = Utilities.getMatrizCondicional(image);
+		double suma =0;
+		for(int i = 0; i < 256; i++) {
+			if(p[i] != 0) {
+				double hi = 0;
+				for(int j = 0; j<256; j++) {
+					if(matCond[j][i] != 0) {
+						hi = -matCond[j][i] *  ((double)Math.log((double) matCond[j][i]) / (double)Math.log((double) 2));
+					}
+				}
+				hCond  += (p[i] *  hi);
+				System.out.println("a " + p[i]);
+				suma += p[i];
+			}
+		}
+		System.out.println("b" + suma);
+		return entropiaestacionaria + hCond;
 	}
 	
 	public static double[][] getMatrizCondicional(ImageParser image){
@@ -58,15 +81,16 @@ public class Utilities {
 		for(int i = 0; i < 500; i++) {
 			for(int j = 0; j < 500; j++) {
 				int coloractual=image.getRGB(j, i).getRed();;
-				if(j!=0 && i!=0) {
+				if(j!=0 || i!=0) {
 					matrizcond[coloractual][coloranterior]++;
 					tiradas[coloranterior]++;
 					coloranterior=coloractual;
 				}				
 			}
 		}
-		for(int i=0;i<500;i++) {
-			for(int j=0; j<500; j++) {
+		
+		for(int i=0;i<256;i++) {
+			for(int j=0; j<256; j++) {
 				if(tiradas[j]==0) {
 					matrizcond[i][j]=0.0f;
 				}else {
