@@ -125,19 +125,45 @@ public class gui extends JPanel{
 	}
 	
 	public void crearArchivos(ImageParser p) {
-		ImageParser bloqueMayorE = p.getBlock(0, 0);
-		ImageParser bloqueMenorE = p.getBlock(0, 0);
-		ImageParser bloquePromedioE = p.getBlock(0, 0);
+		ImageParser bloqueMayorE = null;
+		ImageParser bloqueMenorE= null;
+		ImageParser bloquePromedioE= null;
+		double mayorentropia = Double.MIN_VALUE;
+		double menorentropia = Double.MAX_VALUE;
+		double promedioentropia = 0;
 		
-		double promedio=0;
-		double[][] entropiaSMemoria = new double[4][5];
+		//double[][] entropiaSMemoria = new double[4][5];
 		double[][] entropiaCMemoria = new double[4][5];
 	    
 		for(int j=0; j<5; j++) {
 			for(int i =0; i<4; i++) {
+				//entropiaSMemoria[i][j] = Utilities.getEntropiaSMemoria(p.getBlock(i, j));
 				entropiaCMemoria[i][j] = Utilities.getEntropiaCMemoria(p.getBlock(i, j));
-	   		  	System.out.println(entropiaCMemoria[i][j]);
+	   		  	promedioentropia += entropiaCMemoria[i][j];
 	   	  	}
 	    }
+		promedioentropia = promedioentropia/20;
+		double distancia = Double.MAX_VALUE;
+		for(int j=0; j<5; j++) {
+			for(int i =0; i<4; i++) {
+				if(Math.abs(entropiaCMemoria[i][j]-promedioentropia) < distancia ) {
+					bloquePromedioE = p.getBlock(i, j);
+					distancia = Math.abs(entropiaCMemoria[i][j]-promedioentropia);
+				}
+	   		  	if(entropiaCMemoria[i][j] > mayorentropia) {
+	   		  		bloqueMayorE = p.getBlock(i, j);
+	   		  		mayorentropia = entropiaCMemoria[i][j];
+	   		  	}
+	   		  	if(entropiaCMemoria[i][j] < menorentropia) {
+	   		  		bloqueMenorE = p.getBlock(i, j);
+	   		  		menorentropia = entropiaCMemoria[i][j];
+	   		  	}
+			}
+		}
+		
+		System.out.println(Utilities.getEntropiaCMemoria(bloqueMayorE));
+		System.out.println(Utilities.getEntropiaCMemoria(bloqueMenorE));
+		System.out.println(Utilities.getEntropiaCMemoria(bloquePromedioE));
+		System.out.println(promedioentropia);
 	}
 }
