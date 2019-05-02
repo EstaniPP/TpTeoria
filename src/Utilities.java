@@ -211,7 +211,7 @@ public class Utilities {
 				matrizAcumulada[j][i]=sumacond;
 			}
 			sumaprob+=probabilidadAcumulada[i];
-			probabilidadAcumulada[i]=sumaprob;	
+			probabilidadAcumulada[i]=sumaprob;	 
 		}
 		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
 		
