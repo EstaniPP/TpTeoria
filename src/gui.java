@@ -67,14 +67,6 @@ public class gui extends JPanel{
 	 */
 	private void initialize() {
 		
-		File html = new File("pepe.html");
-		
-		try {
-			html.createNewFile();
-		} catch (IOException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
 		lblNewLabel = new JLabel("");
 		
 		frame = new JFrame();

@@ -143,25 +143,21 @@ public class Utilities {
 	private static int getColorMontecarlo(double[] probabilidadAcumulada) {
 		double rand = Math.random();
 		for(int i=0; i<256; i++) {
-			if(rand<probabilidadAcumulada[i]) {
+			if(rand<=probabilidadAcumulada[i]) {
 				return i;
-			}else {
-				rand-=probabilidadAcumulada[i];
 			}
 		}
-		return 256;
+		return 255;
 	}
 	
 	private static int getColorMontecarloCondicional(double[][] matrizAcumulada, int valor) {
 		double rand = Math.random();
 		for(int i=0; i<256; i++) {
-			if(rand<matrizAcumulada[i][valor]) {
+			if(rand<=matrizAcumulada[i][valor]) {
 				return i;
-			}else {
-				rand-=matrizAcumulada[i][valor];
 			}
 		}
-		return 256;
+		return 255;
 	}
 	
 	public static double getMedia(ImageParser img) {
@@ -171,9 +167,20 @@ public class Utilities {
 		double ant=-1;
 		double[] probabilidadAcumulada = Utilities.getProbabiliades(img);
 		double[][] matrizAcumulada = Utilities.getMatrizCondicional(img);
+		double sumaprob =0;
+		for(int i=0; i<256; i++) {
+			double sumacond =0;
+			for(int j=1; j<256; j++) {
+				sumacond+=matrizAcumulada[j][i];
+				matrizAcumulada[j][i]=sumacond;
+			}
+			sumaprob+=probabilidadAcumulada[i];
+			probabilidadAcumulada[i]=sumaprob;	
+		}
 		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
 		while(!converge(act,ant) || tiradas<Utilities.tiradasMinimas ) {
-			suma += Utilities.getColorMontecarloCondicional(matrizAcumulada,valor);
+			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
+			suma += valor;
 			tiradas++;
 			ant=act;
 			act=suma/tiradas;			
@@ -181,4 +188,25 @@ public class Utilities {
 		return act;
 	}
 	
+	public static double getDesvio(ImageParser img) {
+		double sumaMedia=0.0;
+		double suma = 0.0;
+		int tiradas=0;
+		double act=0.0;
+		double ant=-1.0;
+		double[] probabilidadAcumulada = Utilities.getProbabiliades(img);
+		double[][] matrizAcumulada = Utilities.getMatrizCondicional(img);
+		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
+		
+		while(!converge(act,ant) || tiradas<Utilities.tiradasMinimas ) {
+			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
+			suma += valor;
+			sumaMedia += valor;
+			tiradas++;
+			suma += Math.pow((valor  - (sumaMedia / tiradas)), 2);
+			ant=act;
+			act=Math.sqrt(suma/tiradas);			
+		}
+		return act;
+	}
 }
