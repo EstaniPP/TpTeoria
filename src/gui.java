@@ -187,6 +187,9 @@ public class gui extends JPanel{
 			}
 		}
 		
+		System.out.println(Utilities.getMedia(bloqueMayorE));
+		System.out.println(Utilities.getMedia(bloqueMenorE));
+		/*
 		// ejercicio B
 		
 		SaveHTML ejb = new SaveHTML();
@@ -235,11 +238,11 @@ public class gui extends JPanel{
 		SaveHTML ejd = new SaveHTML();
 		/*Double media = ;
 		Double desvio =;
-		*/
+		
 		
 		eja.saveHTML(path + "/", "EJERCICIO-A.html");
 		ejb.saveHTML(path + "/", "EJERCICIO-B.html");
-		ejc.saveHTML(path + "/", "EJERCICIO-C.html");
+		ejc.saveHTML(path + "/", "EJERCICIO-C.html");*/
 		
 	}
 }

@@ -10,6 +10,8 @@ import org.jfree.data.statistics.HistogramDataset;
 import org.jfree.data.statistics.HistogramType;
 
 public class Utilities {
+	private static int tiradasMinimas = 1000000;
+	private static Double epsilon = 0.0000001;
 	
 	public static double[] getProbabiliades(ImageParser image) {
 		double[] probabilidades = new double[256];
@@ -130,6 +132,53 @@ public class Utilities {
 	    
 	    return chart.createBufferedImage(width, height);
 	    
+	}
+	private static boolean converge(double act, double ant) {
+		if(Math.abs(act-ant)<Utilities.epsilon) {
+			return true;
+		}
+		return false;
+	}
+	
+	private static int getColorMontecarlo(double[] probabilidadAcumulada) {
+		double rand = Math.random();
+		for(int i=0; i<256; i++) {
+			if(rand<probabilidadAcumulada[i]) {
+				return i;
+			}else {
+				rand-=probabilidadAcumulada[i];
+			}
+		}
+		return 256;
+	}
+	
+	private static int getColorMontecarloCondicional(double[][] matrizAcumulada, int valor) {
+		double rand = Math.random();
+		for(int i=0; i<256; i++) {
+			if(rand<matrizAcumulada[i][valor]) {
+				return i;
+			}else {
+				rand-=matrizAcumulada[i][valor];
+			}
+		}
+		return 256;
+	}
+	
+	public static double getMedia(ImageParser img) {
+		double suma=0;
+		int tiradas=0;
+		double act=0;
+		double ant=-1;
+		double[] probabilidadAcumulada = Utilities.getProbabiliades(img);
+		double[][] matrizAcumulada = Utilities.getMatrizCondicional(img);
+		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
+		while(!converge(act,ant) || tiradas<Utilities.tiradasMinimas ) {
+			suma += Utilities.getColorMontecarloCondicional(matrizAcumulada,valor);
+			tiradas++;
+			ant=act;
+			act=suma/tiradas;			
+		}
+		return act;
 	}
 	
 }
