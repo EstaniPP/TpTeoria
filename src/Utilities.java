@@ -11,7 +11,8 @@ import org.jfree.data.statistics.HistogramType;
 
 public class Utilities {
 	private static int tiradasMinimas = 1000000;
-	private static Double epsilon = 0.0000001;
+	private static Double epsilonDesvio = 1e-7;
+	private static Double epsilonMedia = 1e-8;	
 	
 	public static double[] getProbabiliades(ImageParser image) {
 		double[] probabilidades = new double[256];
@@ -82,6 +83,9 @@ public class Utilities {
 					coloranterior=coloractual;
 				}
 				tiradas[coloranterior]++;
+				if(j==499 && i==499) {
+					tiradas[coloranterior]--;
+				}
 			}
 		}
 		
@@ -133,8 +137,8 @@ public class Utilities {
 	    return chart.createBufferedImage(width, height);
 	    
 	}
-	private static boolean converge(double act, double ant) {
-		if(Math.abs(act-ant)<Utilities.epsilon) {
+	private static boolean converge(double act, double ant, double epsilon) {
+		if(Math.abs(act-ant)<epsilon) {
 			return true;
 		}
 		return false;
@@ -160,7 +164,7 @@ public class Utilities {
 		return 255;
 	}
 	
-	public static double getMedia(ImageParser img) {
+	/*public static double getMedia(ImageParser img) {
 		double suma=0;
 		int tiradas=0;
 		double act=0;
@@ -186,27 +190,43 @@ public class Utilities {
 			act=suma/tiradas;			
 		}
 		return act;
-	}
+	}*/
 	
-	public static double getDesvio(ImageParser img) {
+	public static double[] getProcEstocasticos(ImageParser img) {
 		double sumaMedia=0.0;
 		double suma = 0.0;
 		int tiradas=0;
 		double act=0.0;
 		double ant=-1.0;
+		double mediaant=0.0;
+		double mediaact = -1.0;
+		
 		double[] probabilidadAcumulada = Utilities.getProbabiliades(img);
 		double[][] matrizAcumulada = Utilities.getMatrizCondicional(img);
+		double sumaprob =0;
+		for(int i=0; i<256; i++) {
+			double sumacond =0;
+			for(int j=1; j<256; j++) {
+				sumacond+=matrizAcumulada[j][i];
+				matrizAcumulada[j][i]=sumacond;
+			}
+			sumaprob+=probabilidadAcumulada[i];
+			probabilidadAcumulada[i]=sumaprob;	
+		}
 		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
 		
-		while(!converge(act,ant) || tiradas<Utilities.tiradasMinimas ) {
+		while((!converge(act,ant, Utilities.epsilonDesvio) && !converge(mediaact,mediaant, Utilities.epsilonMedia)) || tiradas<Utilities.tiradasMinimas ) {
 			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
-			suma += valor;
 			sumaMedia += valor;
 			tiradas++;
-			suma += Math.pow((valor  - (sumaMedia / tiradas)), 2);
+			suma += Math.pow(((double)valor-(sumaMedia /(double) tiradas)), 2);
 			ant=act;
-			act=Math.sqrt(suma/tiradas);			
+			act=Math.sqrt(suma/(double) tiradas);
+			
+			mediaant=mediaact;
+			mediaact=sumaMedia/tiradas;
 		}
-		return act;
+		double[] procEstocasticos = new double[]{mediaact,act};
+		return procEstocasticos;
 	}
 }

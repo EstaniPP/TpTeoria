@@ -178,9 +178,12 @@ public class gui extends JPanel{
 	   		  	}
 			}
 		}
-		
-		System.out.println(Utilities.getMedia(bloqueMayorE));
-		System.out.println(Utilities.getMedia(bloqueMenorE));
+		double[] proc = Utilities.getProcEstocasticos(bloqueMayorE);
+		double[] proc2 = Utilities.getProcEstocasticos(bloqueMenorE);
+		System.out.println("media:"+proc[0]);
+		System.out.println("media:"+proc2[0]);
+		System.out.println("desvio:"+proc[1]);
+		System.out.println("desvio:"+proc2[1]);
 		/*
 		// ejercicio B
 		
