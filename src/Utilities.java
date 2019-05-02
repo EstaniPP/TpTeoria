@@ -1,3 +1,4 @@
+import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
@@ -95,7 +96,7 @@ public class Utilities {
 		return matrizcond;
 	}
 	
-	public static void createHistogram(ImageParser img, String chartName) {
+	public static BufferedImage createHistogram(ImageParser img, String chartName) {
 		
 		double[] bufferImagen = new double[250000];
 		ImageParser bloque = img.getBlock(0, 0);
@@ -115,15 +116,20 @@ public class Utilities {
 	    boolean toolTips = false;
 	    boolean urls = false; 
 	    JFreeChart chart = ChartFactory.createHistogram( plotTitle, xaxis, yaxis, dataset, orientation, show, toolTips, urls);
-	    
+	   
 	    int width = 500;
 	    int height = 300; 
 	    
+	    /*
 	    try {
 	    	ChartUtilities.saveChartAsPNG(new File(chartName), chart, width, height);
 	    } catch (IOException e) {
-	    	
+	    
 	    }
+	    */
+	    
+	    return chart.createBufferedImage(width, height);
+	    
 	}
 	
 }

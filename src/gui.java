@@ -4,6 +4,7 @@ import java.awt.Graphics2D;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
 import java.io.File;
+import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -65,6 +66,15 @@ public class gui extends JPanel{
 	 * Initialize the contents of the frame.
 	 */
 	private void initialize() {
+		
+		File html = new File("pepe.html");
+		
+		try {
+			html.createNewFile();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		lblNewLabel = new JLabel("");
 		
 		frame = new JFrame();
@@ -114,7 +124,7 @@ public class gui extends JPanel{
 			    if (chooser.showOpenDialog(gui.this) == JFileChooser.APPROVE_OPTION) { 
 			      destination = chooser.getSelectedFile().toString();
 			      ImageParser p = new ImageParser(image);
-			      crearArchivos(p);
+			      calcular(p, chooser.getSelectedFile().toString());
 			    }
 				
 			}
@@ -124,7 +134,7 @@ public class gui extends JPanel{
 		
 	}
 	
-	public void crearArchivos(ImageParser p) {
+	public void calcular(ImageParser p, String path) {
 		ImageParser bloqueMayorE = null;
 		ImageParser bloqueMenorE= null;
 		ImageParser bloquePromedioE= null;
@@ -132,20 +142,36 @@ public class gui extends JPanel{
 		double menorentropia = Double.MAX_VALUE;
 		double promedioentropia = 0;
 		
-		//double[][] entropiaSMemoria = new double[4][5];
+		double[][] entropiaSMemoria = new double[4][5];
 		double[][] entropiaCMemoria = new double[4][5];
 	    
+		// ejercicio A
+		SaveHTML eja = new SaveHTML();
+		eja.addText("Entropias con y sin memoria: ");
+		eja.addBreak();
+		
 		for(int j=0; j<5; j++) {
 			for(int i =0; i<4; i++) {
-				//entropiaSMemoria[i][j] = Utilities.getEntropiaSMemoria(p.getBlock(i, j));
+				entropiaSMemoria[i][j] = Utilities.getEntropiaSMemoria(p.getBlock(i, j));
 				entropiaCMemoria[i][j] = Utilities.getEntropiaCMemoria(p.getBlock(i, j));
 	   		  	promedioentropia += entropiaCMemoria[i][j];
+	   		  	
+	   		  	// ejercicio A
+				eja.addText("Bloque (" + String.valueOf(i) + "," + String.valueOf(j) + "). Con memoria: " + String.valueOf(entropiaCMemoria[i][j]) + " Sin memoria: " + String.valueOf(entropiaSMemoria[i][j]));
+				eja.addBreak();
 	   	  	}
 	    }
 		promedioentropia = promedioentropia/20;
+		
+		
+		
 		double distancia = Double.MAX_VALUE;
 		for(int j=0; j<5; j++) {
 			for(int i =0; i<4; i++) {
+				
+				// ejercicio A
+				
+				
 				if(Math.abs(entropiaCMemoria[i][j]-promedioentropia) < distancia ) {
 					bloquePromedioE = p.getBlock(i, j);
 					distancia = Math.abs(entropiaCMemoria[i][j]-promedioentropia);
@@ -161,9 +187,31 @@ public class gui extends JPanel{
 			}
 		}
 		
+		/*
 		System.out.println(Utilities.getEntropiaCMemoria(bloqueMayorE));
 		System.out.println(Utilities.getEntropiaCMemoria(bloqueMenorE));
 		System.out.println(Utilities.getEntropiaCMemoria(bloquePromedioE));
 		System.out.println(promedioentropia);
+		*/
+		
+		// ejercicio B
+		
+		SaveHTML ejb = new SaveHTML();
+		ejb.addText("Histograma bloque mayor entropia: ");
+		ejb.addBreak();
+		ejb.addPicture(Utilities.createHistogram(bloqueMayorE, "ejb"));
+		ejb.addBreak();
+		ejb.addText("Histograma bloque menor entropia: ");
+		ejb.addBreak();
+		ejb.addPicture(Utilities.createHistogram(bloqueMenorE, "ejb"));
+		ejb.addBreak();
+		ejb.addText("Histograma mas cercano a promedio: ");
+		ejb.addBreak();
+		ejb.addPicture(Utilities.createHistogram(bloquePromedioE, "ejb"));
+		ejb.addBreak();
+		
+		eja.saveHTML(path + "/", "EJERCICIO-A.html");
+		ejb.saveHTML(path + "/", "EJERCICIO-B.html");
+		
 	}
 }
