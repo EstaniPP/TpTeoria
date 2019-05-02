@@ -11,7 +11,7 @@ import org.jfree.data.statistics.HistogramType;
 
 public class Utilities {
 	private static int tiradasMinimas = 1000000;
-	private static Double epsilonDesvio = 1e-7;
+	private static Double epsilonDesvio = 1e-8;
 	private static Double epsilonMedia = 1e-8;	
 	
 	public static double[] getProbabiliades(ImageParser image) {
@@ -217,14 +217,14 @@ public class Utilities {
 		
 		while((!converge(act,ant, Utilities.epsilonDesvio) && !converge(mediaact,mediaant, Utilities.epsilonMedia)) || tiradas<Utilities.tiradasMinimas ) {
 			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
-			sumaMedia += valor;
+			sumaMedia += (double) valor;
 			tiradas++;
 			suma += Math.pow(((double)valor-(sumaMedia /(double) tiradas)), 2);
 			ant=act;
 			act=Math.sqrt(suma/(double) tiradas);
 			
 			mediaant=mediaact;
-			mediaact=sumaMedia/tiradas;
+			mediaact=sumaMedia/(double)tiradas;
 		}
 		double[] procEstocasticos = new double[]{mediaact,act};
 		return procEstocasticos;
