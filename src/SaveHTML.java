@@ -11,7 +11,7 @@ import javax.imageio.ImageIO;
 public class SaveHTML {
 	
 	// where the webpage content will be concatenated
-	String content = "";
+	StringBuilder content = new StringBuilder();
 	
 	public void addPicture(BufferedImage img) {
 		// adds a picture to the webpage
@@ -29,15 +29,15 @@ public class SaveHTML {
 	    
 	    String image = "<img src=\"data:image/png;base64, " + encodedString + "\" />";
 	    
-	    content = content + image;
+	    content = content.append(image);
 	}
 	
 	public void addBreak() {
-		content = content + "<br />";
+		content = content.append("<br />");
 	}
 	
 	public void addText(String text) {
-		content = content + text;
+		content = content.append(text);
 	}
 	
 	public void saveHTML(String path, String name) {
@@ -45,7 +45,7 @@ public class SaveHTML {
 		BufferedWriter writer = null;
         try {
             writer = new BufferedWriter(new FileWriter(html));
-            writer.write(content);
+            writer.write(content.toString());
         } catch (Exception e) {
             e.printStackTrace();
         } finally {

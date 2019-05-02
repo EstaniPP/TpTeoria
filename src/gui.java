@@ -187,13 +187,6 @@ public class gui extends JPanel{
 			}
 		}
 		
-		/*
-		System.out.println(Utilities.getEntropiaCMemoria(bloqueMayorE));
-		System.out.println(Utilities.getEntropiaCMemoria(bloqueMenorE));
-		System.out.println(Utilities.getEntropiaCMemoria(bloquePromedioE));
-		System.out.println(promedioentropia);
-		*/
-		
 		// ejercicio B
 		
 		SaveHTML ejb = new SaveHTML();
@@ -210,8 +203,43 @@ public class gui extends JPanel{
 		ejb.addPicture(Utilities.createHistogram(bloquePromedioE, "ejb"));
 		ejb.addBreak();
 		
+		// ejercicio C
+		
+		SaveHTML ejc = new SaveHTML();
+		double[][] matCond = Utilities.getMatrizCondicional(bloqueMayorE);
+		String matriz = new String();
+		ejc.addText("Matriz condicional bloque mayor entropia: ");
+		ejc.addBreak();
+		ejc.addBreak();
+		for(int i=0;i<256;i++) {
+			for(int j=0;j<256;j++) {
+				ejc.addText(matCond[i][j]+" | ");
+			}
+			ejc.addBreak();
+		}
+		ejc.addBreak();
+		ejc.addBreak();
+		matCond = Utilities.getMatrizCondicional(bloqueMenorE);
+		ejc.addText("Matriz condicional bloque menor entropia: ");
+		ejc.addBreak();
+		ejc.addBreak();
+		for(int i=0;i<256;i++) {
+			for(int j=0;j<256;j++) {
+				ejc.addText(matCond[i][j]+" | ");
+			}
+			ejc.addBreak();
+		}
+		
+		
+		// ejercicio D
+		SaveHTML ejd = new SaveHTML();
+		/*Double media = ;
+		Double desvio =;
+		*/
+		
 		eja.saveHTML(path + "/", "EJERCICIO-A.html");
 		ejb.saveHTML(path + "/", "EJERCICIO-B.html");
+		ejc.saveHTML(path + "/", "EJERCICIO-C.html");
 		
 	}
 }
