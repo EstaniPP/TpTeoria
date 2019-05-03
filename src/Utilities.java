@@ -105,10 +105,9 @@ public class Utilities {
 	public static BufferedImage createHistogram(ImageParser img, String chartName) {
 		
 		double[] bufferImagen = new double[250000];
-		ImageParser bloque = img.getBlock(0, 0);
 		for(int j=0;j<500;j++) {
 			for(int i=0;i<500;i++) {
-				bufferImagen[j*500+i] = (double) bloque.getRGB(i, j).getRed();
+				bufferImagen[j*500+i] = (double) img.getRGB(i, j).getRed();
 			}
 		}
 	    HistogramDataset dataset = new HistogramDataset();
@@ -124,15 +123,7 @@ public class Utilities {
 	    JFreeChart chart = ChartFactory.createHistogram( plotTitle, xaxis, yaxis, dataset, orientation, show, toolTips, urls);
 	   
 	    int width = 500;
-	    int height = 300; 
-	    
-	    /*
-	    try {
-	    	ChartUtilities.saveChartAsPNG(new File(chartName), chart, width, height);
-	    } catch (IOException e) {
-	    
-	    }
-	    */
+	    int height = 300;
 	    
 	    return chart.createBufferedImage(width, height);
 	    
@@ -163,34 +154,6 @@ public class Utilities {
 		}
 		return 255;
 	}
-	
-	/*public static double getMedia(ImageParser img) {
-		double suma=0;
-		int tiradas=0;
-		double act=0;
-		double ant=-1;
-		double[] probabilidadAcumulada = Utilities.getProbabiliades(img);
-		double[][] matrizAcumulada = Utilities.getMatrizCondicional(img);
-		double sumaprob =0;
-		for(int i=0; i<256; i++) {
-			double sumacond =0;
-			for(int j=1; j<256; j++) {
-				sumacond+=matrizAcumulada[j][i];
-				matrizAcumulada[j][i]=sumacond;
-			}
-			sumaprob+=probabilidadAcumulada[i];
-			probabilidadAcumulada[i]=sumaprob;	
-		}
-		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
-		while(!converge(act,ant) || tiradas<Utilities.tiradasMinimas ) {
-			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
-			suma += valor;
-			tiradas++;
-			ant=act;
-			act=suma/tiradas;			
-		}
-		return act;
-	}*/
 	
 	public static double[] getProcEstocasticos(ImageParser img) {
 		double sumaMedia=0.0;
@@ -228,5 +191,24 @@ public class Utilities {
 		}
 		double[] procEstocasticos = new double[]{mediaact,act};
 		return procEstocasticos;
+	}
+
+	public static String getRepeticiones(ImageParser img) {
+		double[] repeticiones = new double[256];
+		for(int i=0;i<256;i++) {
+			repeticiones[i]=0;
+		}
+		
+		for(int j=0;j<500;j++) {
+			for(int i=0;i<500;i++) {
+				repeticiones[img.getRGB(i, j).getRed()]++;
+			}
+		}
+		StringBuilder salida = new StringBuilder();
+		for(int i=0;i<256;i++) {
+			salida.append("El color: "+i+" se repitio "+repeticiones[i]+" veces<br />");
+		}
+		
+		return salida.toString();
 	}
 }

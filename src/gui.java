@@ -178,13 +178,7 @@ public class gui extends JPanel{
 	   		  	}
 			}
 		}
-		double[] proc = Utilities.getProcEstocasticos(bloqueMayorE);
-		double[] proc2 = Utilities.getProcEstocasticos(bloqueMenorE);
-		System.out.println("media:"+proc[0]);
-		System.out.println("media:"+proc2[0]);
-		System.out.println("desvio:"+proc[1]);
-		System.out.println("desvio:"+proc2[1]);
-		/*
+		
 		// ejercicio B
 		
 		SaveHTML ejb = new SaveHTML();
@@ -192,13 +186,28 @@ public class gui extends JPanel{
 		ejb.addBreak();
 		ejb.addPicture(Utilities.createHistogram(bloqueMayorE, "ejb"));
 		ejb.addBreak();
+		ejb.addBreak();
+		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");
+		ejb.addBreak();
+		ejb.addText(Utilities.getRepeticiones(bloqueMayorE));
+		ejb.addBreak();
 		ejb.addText("Histograma bloque menor entropia: ");
 		ejb.addBreak();
 		ejb.addPicture(Utilities.createHistogram(bloqueMenorE, "ejb"));
 		ejb.addBreak();
+		ejb.addBreak();
+		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");
+		ejb.addBreak();
+		ejb.addText(Utilities.getRepeticiones(bloqueMenorE));
+		ejb.addBreak();
 		ejb.addText("Histograma mas cercano a promedio: ");
 		ejb.addBreak();
 		ejb.addPicture(Utilities.createHistogram(bloquePromedioE, "ejb"));
+		ejb.addBreak();
+		ejb.addBreak();
+		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");
+		ejb.addBreak();
+		ejb.addText(Utilities.getRepeticiones(bloquePromedioE));
 		ejb.addBreak();
 		
 		// ejercicio C
@@ -231,13 +240,22 @@ public class gui extends JPanel{
 		
 		// ejercicio D
 		SaveHTML ejd = new SaveHTML();
-		/*Double media = ;
-		Double desvio =;
+		double[] proc = Utilities.getProcEstocasticos(bloqueMayorE);
+		double[] proc2 = Utilities.getProcEstocasticos(bloqueMenorE);
+		ejd.addText("Media del bloque con mayor entropia: "+proc[0]);
+		ejd.addBreak();
+		ejd.addText("Media del bloque con menor entropia: "+proc2[0]);
+		ejd.addBreak();
+		ejd.addText("Desvio del bloque con mayor entropia: "+proc[1]);
+		ejd.addBreak();
+		ejd.addText("Desvio del bloque con menor entropia: "+proc2[1]);
 		
 		
 		eja.saveHTML(path + "/", "EJERCICIO-A.html");
 		ejb.saveHTML(path + "/", "EJERCICIO-B.html");
-		ejc.saveHTML(path + "/", "EJERCICIO-C.html");*/
+		ejc.saveHTML(path + "/", "EJERCICIO-C.html");
+		ejd.saveHTML(path + "/", "EJERCICIO-D.html");
+		
 		
 	}
 }
