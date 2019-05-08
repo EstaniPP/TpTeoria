@@ -2,13 +2,18 @@ import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
+import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+
+import java.awt.BasicStroke;
 import java.awt.BorderLayout;
+import java.awt.Color;
+
 import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 
@@ -19,6 +24,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Font;
 
 public class gui extends JPanel{
 
@@ -70,7 +76,7 @@ public class gui extends JPanel{
 		lblNewLabel = new JLabel("");
 		
 		frame = new JFrame();
-		frame.setBounds(100, 100, 458, 574);
+		frame.setBounds(20, 20, 600, 750);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.getContentPane().setLayout(null);
 		
@@ -92,8 +98,17 @@ public class gui extends JPanel{
 				if(seleccion == JFileChooser.APPROVE_OPTION) {
 					image = fileChooser.getSelectedFile();
 					ImageParser p = new ImageParser(image);
+					BufferedImage bi = p.getBI();
+					//p = p.getBlock(3, 0);
+					Graphics2D g = (Graphics2D) bi.getGraphics();
+					g.setPaint(Color.red);
+					g.setFont(new Font("Arial", Font.BOLD, 40));
+					//g.drawString("Bloque mayor entropia", 200, 200);
+					//g.setStroke(new BasicStroke(20));
+					//g.draw(new Rectangle(0, 0, 500, 500));
+					g.drawImage(bi, null, 0, 0);
 					gui.this.textField.setText(image.getPath());
-					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.this.resize(p.getBI(), 403, 383)));
+					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.this.resize(bi, 500, 625)));
 				}
 			}
 		});
@@ -101,7 +116,7 @@ public class gui extends JPanel{
 		frame.getContentPane().add(btnSeleccionar);
 		
 		
-		lblNewLabel.setBounds(6, 59, 436, 436);
+		lblNewLabel.setBounds(6, 59, 600, 625);
 		frame.getContentPane().add(lblNewLabel);
 		
 		JButton btnCrearArchivos = new JButton("Crear archivos");
@@ -121,7 +136,7 @@ public class gui extends JPanel{
 				
 			}
 		});
-		btnCrearArchivos.setBounds(305, 504, 137, 25);
+		btnCrearArchivos.setBounds(457, 697, 137, 25);
 		frame.getContentPane().add(btnCrearArchivos);
 		
 	}

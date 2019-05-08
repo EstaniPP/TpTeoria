@@ -122,4 +122,6 @@ public class ImageParser {
 		return new Color(image.getRGB(i, j));
 	}
 	
+	
+	
 }
