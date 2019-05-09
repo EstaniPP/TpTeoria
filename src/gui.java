@@ -35,6 +35,8 @@ public class gui extends JPanel{
 	private static String destination = "";
 	private JFileChooser chooser;
 	private File image;
+	
+	BufferedImage bi;
 
 	/**
 	 * Launch the application.
@@ -99,16 +101,10 @@ public class gui extends JPanel{
 				if(seleccion == JFileChooser.APPROVE_OPTION) {
 					image = fileChooser.getSelectedFile();
 					ImageParser p = new ImageParser(image);
+					gui.this.bi = bi;
+					
 					BufferedImage bi = p.getBI();
 					//p = p.getBlock(3, 0);
-					Graphics2D g = (Graphics2D) bi.getGraphics();
-					
-					g.setPaint(Color.red);
-					g.setFont(new Font("Arial", Font.BOLD, 40));
-					g.drawString("Bloque mayor entropia", 200, 200);
-					g.setStroke(new BasicStroke(5));
-					g.draw(new Rectangle(0, 0, 500, 500));
-					g.drawImage(bi, null, 0, 0);
 					gui.this.textField.setText(image.getPath());
 					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.this.resize(bi, 500, 625)));
 				}
@@ -166,13 +162,13 @@ public class gui extends JPanel{
 	   		  	promedioentropia += entropiaCMemoria[i][j];
 	   		  	
 	   		  	// ejercicio A
-				eja.addText("Bloque (" + String.valueOf(i) + "," + String.valueOf(j) + "). Con memoria: " + String.valueOf(entropiaCMemoria[i][j]) + " Sin memoria: " + String.valueOf(entropiaSMemoria[i][j]));
+				eja.addText("Bloque (" + String.valueOf(j) + "," + String.valueOf(i) + "). Con memoria: " + String.valueOf(entropiaCMemoria[i][j]) + " Sin memoria: " + String.valueOf(entropiaSMemoria[i][j]));
 				eja.addBreak();
 	   	  	}
 	    }
 		promedioentropia = promedioentropia/20;
 		
-		
+		// 
 		
 		double distancia = Double.MAX_VALUE;
 		for(int j=0; j<5; j++) {
@@ -199,6 +195,12 @@ public class gui extends JPanel{
 		// ejercicio B
 		
 		SaveHTML ejb = new SaveHTML();
+		ejb.addText("Bloque con mayor entropia: ");
+		ejb.addBreak();
+		ejb.addBreak();
+		ejb.addPicture(bloqueMayorE.getBI());
+		ejb.addBreak();
+		ejb.addBreak();
 		ejb.addText("Histograma bloque mayor entropia: ");
 		ejb.addBreak();
 		ejb.addPicture(Utilities.createHistogram(bloqueMayorE, "ejb"));
@@ -208,6 +210,12 @@ public class gui extends JPanel{
 		ejb.addBreak();
 		ejb.addText(Utilities.getRepeticiones(bloqueMayorE));
 		ejb.addBreak();
+		ejb.addText("Bloque con menor entropia: ");
+		ejb.addBreak();
+		ejb.addBreak();
+		ejb.addPicture(bloqueMenorE.getBI());
+		ejb.addBreak();
+		ejb.addBreak();
 		ejb.addText("Histograma bloque menor entropia: ");
 		ejb.addBreak();
 		ejb.addPicture(Utilities.createHistogram(bloqueMenorE, "ejb"));
@@ -216,6 +224,14 @@ public class gui extends JPanel{
 		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");
 		ejb.addBreak();
 		ejb.addText(Utilities.getRepeticiones(bloqueMenorE));
+		ejb.addBreak();
+		ejb.addText("Entropia: " + Utilities.getEntropiaCMemoria(bloquePromedioE));
+		ejb.addBreak();
+		ejb.addText("Bloque con entropia mas cercano al promedio: ");
+		ejb.addBreak();
+		ejb.addBreak();
+		ejb.addPicture(bloquePromedioE.getBI());
+		ejb.addBreak();
 		ejb.addBreak();
 		ejb.addText("Histograma mas cercano a promedio: ");
 		ejb.addBreak();
@@ -273,6 +289,18 @@ public class gui extends JPanel{
 		ejc.saveHTML(path + "/", "EJERCICIO-C.html");
 		ejd.saveHTML(path + "/", "EJERCICIO-D.html");
 		
+		
+		
+		// dibujar
+		/*
+		Graphics2D g = (Graphics2D) bi.getGraphics();
+		g.setPaint(Color.red);
+		g.setFont(new Font("Arial", Font.BOLD, 40));
+		g.drawString("Bloque mayor entropia", 200, 200);
+		g.setStroke(new BasicStroke(5));
+		g.draw(new Rectangle(0, 0, 500, 500));
+		g.drawImage(bi, null, 0, 0);
+		*/
 		
 	}
 }

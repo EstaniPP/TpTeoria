@@ -114,8 +114,8 @@ public class Utilities {
 	    dataset.setType(HistogramType.FREQUENCY);
 	    dataset.addSeries("Histograma", bufferImagen, 256);
 	    String plotTitle = "Histograma de entropias"; 
-	    String xaxis = "Entropias";
-	    String yaxis = "Valor"; 
+	    String xaxis = "Color";
+	    String yaxis = "Apariciones"; 
 	    PlotOrientation orientation = PlotOrientation.VERTICAL; 
 	    boolean show = false; 
 	    boolean toolTips = false;
@@ -194,7 +194,7 @@ public class Utilities {
 	}
 
 	public static String getRepeticiones(ImageParser img) {
-		double[] repeticiones = new double[256];
+		int[] repeticiones = new int[256];
 		for(int i=0;i<256;i++) {
 			repeticiones[i]=0;
 		}
