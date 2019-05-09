@@ -23,6 +23,7 @@ import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.geom.Ellipse2D;
 import java.awt.event.ActionEvent;
 import java.awt.Font;
 
@@ -101,11 +102,12 @@ public class gui extends JPanel{
 					BufferedImage bi = p.getBI();
 					//p = p.getBlock(3, 0);
 					Graphics2D g = (Graphics2D) bi.getGraphics();
+					
 					g.setPaint(Color.red);
 					g.setFont(new Font("Arial", Font.BOLD, 40));
-					//g.drawString("Bloque mayor entropia", 200, 200);
-					//g.setStroke(new BasicStroke(20));
-					//g.draw(new Rectangle(0, 0, 500, 500));
+					g.drawString("Bloque mayor entropia", 200, 200);
+					g.setStroke(new BasicStroke(5));
+					g.draw(new Rectangle(0, 0, 500, 500));
 					g.drawImage(bi, null, 0, 0);
 					gui.this.textField.setText(image.getPath());
 					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.this.resize(bi, 500, 625)));
