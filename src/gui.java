@@ -1,34 +1,28 @@
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Graphics2D;
 import java.awt.Image;
-import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.IOException;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import java.awt.BasicStroke;
-import java.awt.BorderLayout;
-import java.awt.Color;
 
-import javax.swing.JDesktopPane;
 import javax.swing.JFileChooser;
 
-import java.awt.Component;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
-import java.awt.geom.Ellipse2D;
 import java.awt.event.ActionEvent;
-import java.awt.Font;
 
 public class gui extends JPanel{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JFrame frame;
 	private JTextField textField;
 	private JLabel lblNewLabel;
@@ -106,7 +100,7 @@ public class gui extends JPanel{
 					BufferedImage bi = p.getBI();
 					//p = p.getBlock(3, 0);
 					gui.this.textField.setText(image.getPath());
-					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.this.resize(bi, 500, 625)));
+					gui.this.lblNewLabel.setIcon(new ImageIcon(gui.resize(bi, 500, 625)));
 				}
 			}
 		});
@@ -247,7 +241,6 @@ public class gui extends JPanel{
 		
 		SaveHTML ejc = new SaveHTML();
 		double[][] matCond = Utilities.getMatrizCondicional(bloqueMayorE);
-		String matriz = new String();
 		ejc.addText("Matriz condicional bloque mayor entropia: ");
 		ejc.addBreak();
 		ejc.addBreak();
