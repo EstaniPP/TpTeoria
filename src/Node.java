@@ -1,5 +1,3 @@
-package teo;
-
 import java.util.HashMap;
 
 public abstract class Node {
