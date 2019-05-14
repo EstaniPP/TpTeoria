@@ -1,5 +1,3 @@
-package teo;
-
 import java.util.HashMap;
 
 public class FatherNode extends Node{
