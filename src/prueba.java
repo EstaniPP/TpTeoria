@@ -10,8 +10,10 @@ public class prueba {
 		double[] probabilities = {0.125,0.25,0.125,0.5};
 		HashMap<Integer,Node> huffmanMap = new HashMap<Integer,Node>();
 		for(Integer i=0; i<probabilities.length; i++) {
-			ChildNode node = new ChildNode((Integer)i,probabilities[i]);
-			huffmanMap.put(node.getName(),node);
+			if(probabilities[i]!=0){
+				ChildNode node = new ChildNode((Integer)i,probabilities[i]);
+				huffmanMap.put(node.getName(),node);
+			}
 		}
 		
 		for(Entry<Integer, Node> n: huffmanMap.entrySet()) {

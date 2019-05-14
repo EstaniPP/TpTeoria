@@ -1,10 +1,10 @@
 import java.awt.image.BufferedImage;
 
-import org.jfree.chart.ChartFactory;
+/*import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
 import org.jfree.data.statistics.HistogramDataset;
-import org.jfree.data.statistics.HistogramType;
+import org.jfree.data.statistics.HistogramType;*/
 
 public class Utilities {
 	private static int tiradasMinimas = 1000000;
@@ -107,7 +107,7 @@ public class Utilities {
 				bufferImagen[j*500+i] = (double) img.getRGB(i, j).getRed();
 			}
 		}
-	    HistogramDataset dataset = new HistogramDataset();
+	   /* HistogramDataset dataset = new HistogramDataset();
 	    dataset.setType(HistogramType.FREQUENCY);
 	    dataset.addSeries("Histograma", bufferImagen, 256);
 	    String plotTitle = "Histograma de entropias"; 
@@ -122,7 +122,8 @@ public class Utilities {
 	    int width = 500;
 	    int height = 300;
 	    
-	    return chart.createBufferedImage(width, height);
+	    return chart.createBufferedImage(width, height);*/
+		return new BufferedImage(1,1,1);
 	    
 	}
 	private static boolean converge(double act, double ant, double epsilon) {
@@ -173,7 +174,7 @@ public class Utilities {
 			sumaprob+=probabilidadAcumulada[i];
 			probabilidadAcumulada[i]=sumaprob;	 
 		}
-		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
+		int valor = 100;//Utilities.getColorMontecarlo(probabilidadAcumulada);
 		
 		while((!converge(act,ant, Utilities.epsilonDesvio) && !converge(mediaact,mediaant, Utilities.epsilonMedia)) || tiradas<Utilities.tiradasMinimas ) {
 			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
