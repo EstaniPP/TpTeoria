@@ -27,7 +27,6 @@ public class FatherNode extends Node{
 		}else {
 			exp = 1;
 		}
-		System.out.println((int)Math.pow(10,level)+lastcode);
 		codes.putAll(n2.getCode((int)Math.pow(10,level)+lastcode,level+1));
 		return codes;
 	}
