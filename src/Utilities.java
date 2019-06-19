@@ -174,7 +174,7 @@ public class Utilities {
 			sumaprob+=probabilidadAcumulada[i];
 			probabilidadAcumulada[i]=sumaprob;	 
 		}
-		int valor = 100;//Utilities.getColorMontecarlo(probabilidadAcumulada);
+		int valor = Utilities.getColorMontecarlo(probabilidadAcumulada);
 		
 		while((!converge(act,ant, Utilities.epsilonDesvio) && !converge(mediaact,mediaant, Utilities.epsilonMedia)) || tiradas<Utilities.tiradasMinimas ) {
 			valor = Utilities.getColorMontecarloCondicional(matrizAcumulada, valor);
