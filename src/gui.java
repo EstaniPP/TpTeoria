@@ -197,7 +197,7 @@ public class gui extends JPanel{
 		ejb.addBreak();
 		ejb.addText("Histograma bloque mayor entropia: ");
 		ejb.addBreak();
-		//ejb.addPicture(Utilities.createHistogram(bloqueMayorE, "ejb"));
+		ejb.addPicture(Utilities.createHistogram(bloqueMayorE, "ejb"));
 		ejb.addBreak();
 		ejb.addBreak();
 		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");
@@ -212,7 +212,7 @@ public class gui extends JPanel{
 		ejb.addBreak();
 		ejb.addText("Histograma bloque menor entropia: ");
 		ejb.addBreak();
-		//ejb.addPicture(Utilities.createHistogram(bloqueMenorE, "ejb"));
+		ejb.addPicture(Utilities.createHistogram(bloqueMenorE, "ejb"));
 		ejb.addBreak();
 		ejb.addBreak();
 		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");
@@ -229,7 +229,7 @@ public class gui extends JPanel{
 		ejb.addBreak();
 		ejb.addText("Histograma mas cercano a promedio: ");
 		ejb.addBreak();
-		//ejb.addPicture(Utilities.createHistogram(bloquePromedioE, "ejb"));
+		ejb.addPicture(Utilities.createHistogram(bloquePromedioE, "ejb"));
 		ejb.addBreak();
 		ejb.addBreak();
 		ejb.addText("Numero de repeticiones de cada valor en el bloque de mayor entropia:");

@@ -8,5 +8,6 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry excluding="src/|jfreechart-1.0.19/" kind="src" path=""/>
 	<classpathentry kind="lib" path="jfreechart-1.0.19"/>
+	<classpathentry kind="lib" path="/Users/valentinfvazquez/eclipse-workspace/Tincho/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

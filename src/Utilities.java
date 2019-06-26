@@ -1,5 +1,11 @@
 import java.awt.image.BufferedImage;
 
+import org.jfree.chart.ChartFactory;
+import org.jfree.chart.JFreeChart;
+import org.jfree.chart.plot.PlotOrientation;
+import org.jfree.data.statistics.HistogramDataset;
+import org.jfree.data.statistics.HistogramType;
+
 /*import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PlotOrientation;
@@ -107,7 +113,7 @@ public class Utilities {
 				bufferImagen[j*500+i] = (double) img.getRGB(i, j).getRed();
 			}
 		}
-	   /* HistogramDataset dataset = new HistogramDataset();
+		HistogramDataset dataset = new HistogramDataset();
 	    dataset.setType(HistogramType.FREQUENCY);
 	    dataset.addSeries("Histograma", bufferImagen, 256);
 	    String plotTitle = "Histograma de entropias"; 
@@ -122,8 +128,7 @@ public class Utilities {
 	    int width = 500;
 	    int height = 300;
 	    
-	    return chart.createBufferedImage(width, height);*/
-		return new BufferedImage(1,1,1);
+	    return chart.createBufferedImage(width, height);
 	    
 	}
 	private static boolean converge(double act, double ant, double epsilon) {
